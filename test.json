@@ -1,0 +1,121 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "A test admin api",
+    "description": "Api",
+    "version": "1.0.0"
+  },
+  "host": "example.com",
+  "schemes": [
+    "https"
+  ],
+  "basePath": "/api/v1",
+  "produces": [
+    "application/json"
+  ],
+  "security": [
+    {
+      "admin_jwt": []
+    }
+  ],
+  "paths": {
+    "/admin/cardId": {
+      "get": {
+        "summary": "A summary",
+        "description": "A description",
+        "x-access-level": "focus",
+        "security": [
+          {
+            "admin_jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cardId",
+            "description": "The card to reconcile",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response goes here"
+          },
+          "400": {
+            "description": "Bad Parameters",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Can't find user"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "operationId": "OperationId",
+        "tags": [
+          "rec"
+        ],
+        "x-swagger-router-controller": "RecController"
+      }
+    },
+  },
+  "definitions": {
+    "Action": {
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "registration_token": {
+          "type": "string",
+          "format": "varchar(255)",
+          "description": "A token"
+        },
+        "payload": {
+          "type": "string",
+          "description": "The raw action and body request"
+        },
+        "is_success": {
+          "type": "boolean",
+          "description": "If was successful submitted"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "formatLog": {
+      "properties": {}
+    },
+    "db": {
+      "properties": {}
+    },
+    "dbReg": {
+      "properties": {}
+    }
+  },
+  "securityDefinitions": {
+    "admin_jwt": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "authorization"
+    }
+  }
+}
